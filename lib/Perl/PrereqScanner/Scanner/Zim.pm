@@ -17,13 +17,11 @@ sub scan_for_prereqs {
     my $includes = $ppi_doc->find('Statement::Include') || [];
     for my $node (@$includes) {
 
-        # inheritance
         if ( $self->_is_base_module( $node->module ) ) {
 
             my @meat = grep {
                      $_->isa('PPI::Token::QuoteLike::Words')
                   || $_->isa('PPI::Token::Quote')
-                  || $_->isa('PPI::Token::Number')
             } $node->arguments;
 
             my @args = map { $self->_q_contents($_) } @meat;

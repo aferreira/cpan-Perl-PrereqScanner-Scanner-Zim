@@ -22,10 +22,19 @@ PERL
             'Importer::Zim'      => '0',
             'Scalar::Util'       => '0',
             'Mango::BSON'        => '0',
-            'Foo'                => '0',    # FIXME '3.0'
+            'Foo'                => '3.0',
             'SpaceTime::Machine' => '0',
         },
         what => 'Importer::Zim synopsis',
+    },
+    {
+        perl_code =>
+q{ use zim 'Test::More' => { -version => 0.88 } => qw(ok done_testing); },
+        expected => {
+            'zim'        => '0',
+            'Test::More' => '0.88',
+        },
+        what => 'Previous TODO',
     },
 );
 

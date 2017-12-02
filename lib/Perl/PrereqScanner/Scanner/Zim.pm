@@ -10,6 +10,8 @@ package Perl::PrereqScanner::Scanner::Zim;
 use Moose;
 with 'Perl::PrereqScanner::Scanner';
 
+use PPIx::Literal ();
+
 sub scan_for_prereqs {
     my ( $self, $ppi_doc, $req ) = @_;
 
@@ -19,16 +21,13 @@ sub scan_for_prereqs {
 
         if ( $self->_is_base_module( $node->module ) ) {
 
-            my @meat = grep {
-                     $_->isa('PPI::Token::QuoteLike::Words')
-                  || $_->isa('PPI::Token::Quote')
-            } $node->arguments;
-
-            my @args = map { $self->_q_contents($_) } @meat;
+            my @args = PPIx::Literal->convert( $node->arguments );
 
             if (@args) {
-                my $module  = shift @args;
-                my $version = '0';           # FIXME
+                my $module = shift @args;
+                my $opts = ref $args[0] eq 'HASH' ? shift @args : {};
+                my $version =
+                  exists $opts->{-version} ? $opts->{-version} : '0';
                 $req->add_minimum( $module => $version );
             }
         }

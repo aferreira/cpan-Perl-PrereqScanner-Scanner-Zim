@@ -70,8 +70,4 @@ This scanner will look for dependencies from the L<Importer::Zim> module:
 
     use Importer::Zim 'Scalar::Util' => qw(blessed);
 
-=head1 BUGS
-
-This scanner does not capture module version as in
-
     use zim 'Test::More' => { -version => 0.88 } => qw(ok done_testing);

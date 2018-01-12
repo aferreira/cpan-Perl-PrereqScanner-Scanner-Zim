@@ -49,6 +49,8 @@ sub _is_base_module {
     return $IS_BASE->{ $_[1] };
 }
 
+no Moose;
+
 1;
 
 =encoding utf8
